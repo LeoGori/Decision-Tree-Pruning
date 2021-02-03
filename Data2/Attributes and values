@@ -1,0 +1,10 @@
+alt,yes,no
+bar,yes,no
+fri,yes,no
+hun,yes,no
+pat,none,some,full
+price,$,$$,$$$
+rain,yes,no
+res,yes,no
+type,italian,thai,french,burger
+est,0-10,10-30,30-60,>60
