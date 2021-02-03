@@ -1,7 +1,3 @@
-from Rule import Rule
-from Decision_Tree_Learning import *
-
-
 class SetOfRules:
 
     def __init__(self):

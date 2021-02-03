@@ -1,15 +1,10 @@
 import latextable as latextable
 from texttable import Texttable
-from Decision_Tree_Learning import *
-# import matplotlib.pyplot as plt
 import csv
-#import collections
-#from datetime import datetime
-#import random
 from Example import Example
-import copy
-#import sklearn
 from SetOfRules import *
+from Decision_Tree_Learning import *
+
 
 def get_attributes():
     attributes = list()
@@ -50,18 +45,18 @@ def get_classification():
     return classification
 
 
-def get_num_istances_per_classification(classification):
-    classifications = dict()
-
-    for c in classification.get_values():
-        classifications[c] = 0
-
-    print(classifications)
-
-    for c in Y:
-        classifications[c] += 1
-
-    print(classifications)
+# def get_num_istances_per_classification(classification):
+#     classifications = dict()
+#
+#     for c in classification.get_values():
+#         classifications[c] = 0
+#
+#     print(classifications)
+#
+#     for c in Y:
+#         classifications[c] += 1
+#
+#     print(classifications)
 
 
 class Test:
@@ -73,7 +68,6 @@ class Test:
         self._table.set_cols_dtype(['i', 'f', 'f'])
         self.accuracy_pre_pruning = []
         self.accuracy_post_pruning = []
-        # self.plt = plt
 
     def process(self, index):
         print("test n." + str(index))
