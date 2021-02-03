@@ -1,5 +1,6 @@
 from Node import Node
 from Rule import Rule
+from SetOfRules import SetOfRules
 import copy
 from Attribute import Attribute
 
@@ -69,7 +70,7 @@ class Tree:
 
     def get_set_of_rules(self):
         node = self.__root
-        rules = list()
+        rules = SetOfRules()
         rule = Rule()
         self.__get_set_of_rules(node, rules, rule)
         return rules
@@ -83,4 +84,4 @@ class Tree:
         else:
             rule.set_post_condition(current_node.get_attribute().get_name())
             rule_copy = copy.deepcopy(rule)
-            rules.append(rule_copy)
+            rules.add_rule(rule_copy)

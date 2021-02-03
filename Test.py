@@ -9,7 +9,7 @@ import csv
 from Example import Example
 import copy
 #import sklearn
-
+from SetOfRules import *
 
 def get_attributes():
     attributes = list()
@@ -36,6 +36,34 @@ def get_examples_set(examples_attributes, examples_classifications, attributes):
     return training_examples
 
 
+def get_classification():
+    my_file = open("Data/Classification", "r")
+    content = my_file.read()
+    content_list = content.split(", ")
+    my_file.close()
+
+    classification = Classification()
+
+    for value in content_list:
+        classification.set_value(value)
+
+    return classification
+
+
+def get_num_istances_per_classification(classification):
+    classifications = dict()
+
+    for c in classification.get_values():
+        classifications[c] = 0
+
+    print(classifications)
+
+    for c in Y:
+        classifications[c] += 1
+
+    print(classifications)
+
+
 class Test:
 
     def __init__(self):
@@ -44,7 +72,7 @@ class Test:
         self._table.set_cols_align(["c"] * 3)
         self._table.set_cols_dtype(['i', 'f', 'f'])
         self.accuracy_pre_pruning = []
-        self.best_accuracy_post_pruning = []
+        self.accuracy_post_pruning = []
         # self.plt = plt
 
     def process(self, index):
@@ -55,73 +83,62 @@ class Test:
 
         print(str(len(X)) + ', ' + str(len(x_train)) + ', ' + str(len(x_test)) + ', ' + str(len(x_validation)))
 
-        my_file = open("Data/Classification", "r")
-        content = my_file.read()
-        content_list = content.split(", ")
-        my_file.close()
+        # definisce un insieme di classificazioni prelevandole dal dataset
+        classification = get_classification()
 
-        classification = Classification()
-
-        for value in content_list:
-            classification.set_value(value)
-
-        classifications = dict()
-
-        for c in classification.get_values():
-            classifications[c] = 0
-
-        print(classifications)
-
-        for c in Y:
-            classifications[c] += 1
-
-        print(classifications)
-
+        # preleva gli attributi dal dataset
         attributes = get_attributes()
         clone_attributes = get_attributes()
 
+        # definisce una lista di elementi di tipo Example costruiti sui valori del dataset
         training_examples = get_examples_set(x_train, y_train, attributes)
 
         validation_examples = get_examples_set(x_validation, y_validation, attributes)
 
         test_examples = get_examples_set(x_test, y_test, attributes)
 
+        # esegue l'apprendimento dell'albero di decisione
         tree = decision_tree_learning(training_examples, clone_attributes, training_examples)
         print('la radice è ' + str(tree.get_root().get_attribute().get_name()))
         tree.x_order()
 
-        rules = tree.get_set_of_rules()
+        # definisce il set di regole estratto dalla struttura dell'albero
+        set_of_rules = tree.get_set_of_rules()
 
-        accuracy = test_accuracy(rules, training_examples)
+        #calcola l'accuratezza del set di regole sul training set
+        accuracy = test_accuracy(set_of_rules.get_rules(), training_examples)
         print('accuracy on training set is: ' + str(accuracy) + ' %')
 
-        accuracy = test_accuracy(rules, test_examples)
+        # calcola l'accuratezza del set di regole sul test set prima di eseguire la strategia di pruning
+        accuracy = test_accuracy(set_of_rules.get_rules(), test_examples)
         print('accuracy on test set before pruning is: ' + str(accuracy) + ' %')
 
         self.accuracy_pre_pruning.append(accuracy)
 
-        for rule in rules:
+        for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
 
-        print('accuracy on validation set before pruning is: ' + str(test_accuracy(rules, validation_examples)) + ' %')
+        print('accuracy on validation set before pruning is: ' + str(test_accuracy(set_of_rules.get_rules(), validation_examples)) + ' %')
 
-        rules = rule_pruning(rules, validation_examples)
-        accuracy = test_accuracy(rules, test_examples)
+        # viene eseguita la strategia di pruning sul set di regole
+        set_of_rules.rule_pruning(validation_examples)
+        # viene calcolata l'accuratezza del test set sul nuovo set di regole
+        accuracy = test_accuracy(set_of_rules.get_rules(), test_examples)
 
-        self.best_accuracy_post_pruning.append(accuracy)
+        self.accuracy_post_pruning.append(accuracy)
 
-        for rule in rules:
+        for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
         print('accuracy on test set after pruning is: ' + str(accuracy) + ' %')
 
-        print('accuracy on validation set after pruning is: ' + str(test_accuracy(rules, validation_examples)) + ' %')
+        print('accuracy on validation set after pruning is: ' + str(test_accuracy(set_of_rules.get_rules(), validation_examples)) + ' %')
 
     def build_comparison_table(self):
         self._table.add_rows([["Test n.", "Accuratezza pre pruning", "Accuratezza post pruning"]])
 
         for i in range(len(self.accuracy_pre_pruning)):
             self._table.add_row(
-                [str(i + 1), self.accuracy_pre_pruning[i], self.best_accuracy_post_pruning[i]]
+                [str(i + 1), self.accuracy_pre_pruning[i], self.accuracy_post_pruning[i]]
             )
 
     def print_comparison_table(self):
