@@ -1,6 +1,6 @@
-# Decision-Tree-Pruning
+# Implementazione di una strategia di apprendimento e pruning di alberi di decisione
 
-Nella seguente repository viene implementato un algoritmo per l'apprendimento di alberi di decisione utilizzando l'entropia come misura di impurità (descritto nel libro "Artificial Intelligence: A Modern Approach", P.Norvig, S.Russell, §18.3) e di una strategia di pruning su un insieme di regole estratte dalla struttura dell'albero basata sull'errore sul validation set (descritto nel libro "Machine Learning", T. Mitchell, §3.7.1.2).
+Nella seguente repository vengono implementati gli algoritmi di apprendimento di alberi di decisione utilizzando l'entropia come misura di impurità (descritto nel libro "Artificial Intelligence: A Modern Approach", P.Norvig, S.Russell, §18.3) e di una strategia di pruning su un insieme di regole estratte dalla struttura dell'albero basata sull'errore sul validation set (descritto nel libro "Machine Learning", T. Mitchell, §3.7.1.2).
 
 # Come usare il codice
 Per poter eseguire il test per il confronto dell'accuratezza prima e dopo l'applicazione della strategia di pruning è necessario scaricare il dataset [Nursery](https://archive.ics.uci.edu/ml/datasets/Nursery) e inserire il file 'nursery.data' all'interno della directory nominata 'Data'.
