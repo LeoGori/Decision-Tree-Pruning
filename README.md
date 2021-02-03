@@ -20,8 +20,8 @@ I file che compongono il progetto sono:
 # Linguaggio e librerie
 
 Il progetto è stato realizzato utilizzando _Python 3.8_ come linguaggio di programmazione. Sono inoltre state utilizzate le seguenti librerie:
-- **random**: per generare numeri casuali, rimuovere casualmente e uniformemente con una data probabilità alcuni valori e per scegliere casualmente degli elementi da una lista.
-- **copy**: per eseguire la deepcopy di alcune liste nel main.
+- **copy**: per eseguire la deepcopy di alcune liste.
 - **texttable**: per la generazione di codice Latex per la costruzione di tabelle per raccogliere i valori delle accuratezze.
-- **csv**: per la lettura di informazioni quali gli esempi del dataset da file di testo.
+- **csv** e **pandas**: per la lettura di informazioni quali gli esempi del dataset da file di testo di tipo csv.
 - **sklearn**: per lo splitting del dataset e l'estrazione casuale di set di esempi per la generazione di training set, validation set e test set.
+- **math**: per l'utilizzo della funzione log(x) per il calcolo dell'entropia.
