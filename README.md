@@ -13,13 +13,13 @@ I file che compongono il progetto sono:
 - [**_Attribute.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Example.py): classe che raccoglie i nomi degli attributi e i relativi valori legali, definiti nel file 'Attributes and values' all'interno della directory 'Data'. Per comodità il file è inizializzato con gli attributi seguiti dai relativi valori legali del dataset Nursery ma può essere sovrascritto per l'utilizzo di altri dataset. N:B.: ogni riga inizia col nominativo dell'attributo, seguito da i relativi valori distinti da "," (Es.: 'colore,rosso,verde,giallo')
 - [**_Example.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Example.py): classe che registra coppie (Attributo, Valore) per ogni attributo di un esempio del dataset.
 - [**_Node.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Node.py): classe che rappresenta un'entità nodo, per la realizzazione di un albero di decisione, la quale registra i valori di attributo scelto sulla base del guadagno di informazione basato su entropia.
-- [**_Tree.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Tree.py): classe che raccoglie in una struttura a albero elementi di tipo Node.
-- [**_Rule.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Rule.py): classe che rappresenta una regola di decisione, la quale registra un insieme di coppie (Attributo, Valore) come Preconditions e la relativa classificazione come Postcondition.
-- [**_SetOfRules.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/SetOfRules.py): classe che racoglie una lista di elementi di tipo Rule responsabile dell'esecuzione della strategia di pruning e del successivo ordinamento della lista di decisione.
+- [**_Tree.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Tree.py): classe che raccoglie in una struttura a albero elementi di tipo **Node**.
+- [**_Rule.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Rule.py): classe che rappresenta una regola di decisione, la quale registra un insieme di coppie (Attributo, Valore) come _Preconditions_ e la relativa classificazione come _Postcondition_.
+- [**_SetOfRules.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/SetOfRules.py): classe che raccoglie una lista di elementi di tipo **Rule** responsabile dell'esecuzione della strategia di pruning e del successivo ordinamento della lista di decisione.
 - [**DecisionTreeLearning.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/DecisionTreeLearning.py): File contenente funzioni per l'apprendimento dell'albero di decisione.
 - [**_Test.py_**](https://github.com/LeoGori/Decision-Tree-Pruning/blob/master/Test.py): classe che esegue i test su alberi di decisione generati su porzioni di dataset scelte in modo casuale, e che registra i valori delle accuratezze delle strutture di decisione prima e dopo la strategia di pruning.
 # Linguaggio e librerie
-Il progetto è stato realizzato utilizzando Python 3.8 come linguaggio di programmazione. Sono inoltre state utilizzate le seguenti librerie:
+Il progetto è stato realizzato utilizzando _Python 3.8_ come linguaggio di programmazione. Sono inoltre state utilizzate le seguenti librerie:
 
 - **copy**: per eseguire la deepcopy di alcune liste.
 - **texttable**: per la generazione di codice Latex per la costruzione di tabelle per raccogliere i valori delle accuratezze.
