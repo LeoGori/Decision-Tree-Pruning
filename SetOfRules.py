@@ -1,13 +1,23 @@
+from Rule import Rule
+
+
 class SetOfRules:
 
     def __init__(self):
         self.rules = list()
+        self.default_rule = Rule()
 
     def add_rule(self, rule):
         self.rules.append(rule)
 
     def get_rules(self):
         return self.rules
+
+    def get_size(self):
+        return len(self.rules)
+
+    def set_default_rule(self, classification):
+        self.default_rule.set_post_condition(classification)
 
     def order_set(self, examples):
         d = dict()
@@ -50,25 +60,26 @@ class SetOfRules:
                     break
         self.order_set(examples)
 
+    def test_accuracy(self, examples):
+        if len(examples) == 0:
+            return 0
+        num_success = 0
+        for example in examples:
+            output = self.predict(example)
+            if output.get_post_condition() == example.get_classification():
+                num_success = num_success + 1
+        accuracy = (num_success / len(examples)) * 100
+        return accuracy
 
-def test_accuracy(rules, examples):
-    if len(examples) == 0:
-        return 0
-    num_success = 0
-    for example in examples:
-        output = predict(rules, example)
-        if output and output.get_post_condition() == example.get_classification():
-            num_success = num_success + 1
-    accuracy = (num_success / len(examples)) * 100
-    return accuracy
+    def predict(self, example):
+        values = example.get_values().items()
+        for rule in self.rules:
+            if rule.get_preconditions().items() <= values:
+                return rule
+        return self.default_rule
 
-
-def predict(rules, example):
-    values = example.get_values().items()
-    for rule in rules:
-        if rule.get_preconditions().items() <= values:
-            return rule
-    return None
+    # def shuffle(self):
+    #     random.shuffle(self.rules)
 
 
 def test_rule_accuracy(rule, examples):
@@ -85,6 +96,18 @@ def test_rule_accuracy(rule, examples):
     if num_covers == 0:
         return 0
     accuracy = (num_success / num_covers) * 100
+    return accuracy
+
+
+def test_rule_coverage(rule, examples):
+    if len(examples) == 0:
+        return 0
+    num_covers = 0
+    for example in examples:
+        output = rule_predict(rule, example)
+        if output:
+            num_covers = num_covers + 1
+    accuracy = (num_covers / len(examples)) * 100
     return accuracy
 
 

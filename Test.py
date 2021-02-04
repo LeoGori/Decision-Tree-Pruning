@@ -64,10 +64,12 @@ class Test:
     def __init__(self):
 
         self._table = Texttable()
-        self._table.set_cols_align(["c"] * 3)
-        self._table.set_cols_dtype(['i', 'f', 'f'])
+        self._table.set_cols_align(["c"] * 5)
+        self._table.set_cols_dtype(['i', 'f', 'i', 'f', 'i'])
         self.accuracy_pre_pruning = []
+        self.rule_set_size_pre_pruning = []
         self.accuracy_post_pruning = []
+        self.rule_set_size_post_pruning = []
 
     def process(self, index):
         print("test n." + str(index))
@@ -98,41 +100,48 @@ class Test:
 
         # definisce il set di regole estratto dalla struttura dell'albero
         set_of_rules = tree.get_set_of_rules()
+        set_of_rules.set_default_rule(get_max_classification_occurrences(training_examples))
 
         #calcola l'accuratezza del set di regole sul training set
-        accuracy = test_accuracy(set_of_rules.get_rules(), training_examples)
+        accuracy = set_of_rules.test_accuracy(training_examples)
         print('accuracy on training set is: ' + str(accuracy) + ' %')
 
         # calcola l'accuratezza del set di regole sul test set prima di eseguire la strategia di pruning
-        accuracy = test_accuracy(set_of_rules.get_rules(), test_examples)
+        accuracy = set_of_rules.test_accuracy(test_examples)
         print('accuracy on test set before pruning is: ' + str(accuracy) + ' %')
 
         self.accuracy_pre_pruning.append(accuracy)
+        self.rule_set_size_pre_pruning.append(set_of_rules.get_size())
 
         for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
 
-        print('accuracy on validation set before pruning is: ' + str(test_accuracy(set_of_rules.get_rules(), validation_examples)) + ' %')
+        print('accuracy on validation set before pruning is: ' + str(set_of_rules.test_accuracy(validation_examples)) + ' %')
 
         # viene eseguita la strategia di pruning sul set di regole
         set_of_rules.rule_pruning(validation_examples)
         # viene calcolata l'accuratezza del test set sul nuovo set di regole
-        accuracy = test_accuracy(set_of_rules.get_rules(), test_examples)
+        accuracy = set_of_rules.test_accuracy(test_examples)
 
         self.accuracy_post_pruning.append(accuracy)
+        self.rule_set_size_post_pruning.append(set_of_rules.get_size())
 
         for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
         print('accuracy on test set after pruning is: ' + str(accuracy) + ' %')
 
-        print('accuracy on validation set after pruning is: ' + str(test_accuracy(set_of_rules.get_rules(), validation_examples)) + ' %')
+        print('accuracy on validation set after pruning is: ' + str(set_of_rules.test_accuracy(validation_examples)) + ' %')
 
     def build_comparison_table(self):
-        self._table.add_rows([["Test n.", "Accuratezza pre pruning", "Accuratezza post pruning"]])
+        self._table.add_rows([["Test n.", r'\t' + "head{Accuratezza\\\\pre pruning}",
+                               r'\t' + "head{Dimensione del Rule-Set\\\\ pre pruning}",
+                               r'\t' + "head{Accuratezza\\\\post pruning}",
+                               r'\t' + "head{Dimensione del Rule-Set\\\\post pruning}"]])
 
         for i in range(len(self.accuracy_pre_pruning)):
             self._table.add_row(
-                [str(i + 1), self.accuracy_pre_pruning[i], self.accuracy_post_pruning[i]]
+                [str(i + 1), str(self.accuracy_pre_pruning[i])[0:6] + " \%", self.rule_set_size_pre_pruning[i],
+                 str(self.accuracy_post_pruning[i])[0:6] + " \%", self.rule_set_size_post_pruning[i]]
             )
 
     def print_comparison_table(self):

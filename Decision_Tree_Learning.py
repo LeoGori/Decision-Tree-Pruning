@@ -32,13 +32,29 @@ def decision_tree_learning(examples, attributes, parent_examples):
 
 
 def plurality_value(examples):
-    classification = list()
-    for example in examples:
-        classification.append(example.get_classification())
+
+    classification = get_max_classification_occurrences(examples)
     t = Tree()
-    a = Attribute(max(classification, key=classification.count))
+    a = Attribute(classification)
     t.set_root(a)
     return t
+
+
+def get_max_classification_occurrences(examples):
+    classification = Classification()
+    classifications = dict()
+
+    for c in classification.get_values():
+        classifications[c] = 0
+
+    for example in examples:
+        classifications[example.get_classification()] += 1
+
+    v = list(classifications.values())
+
+    # taking list of car keys in v
+    k = list(classifications.keys())
+    return k[v.index(max(v))]
 
 
 def have_same_classification(examples):
@@ -117,19 +133,3 @@ def split_dataset(balance_data):
         X_test_and_validation, y_test_and_validation, test_size=0.5)
 
     return X, Y, X_train, X_validation, X_test, y_train, y_validation, y_test
-
-
-# def test_rule_quality(rule, examples):
-#     if len(examples) == 0:
-#         return 0
-#     num_success = 0
-#     for example in examples:
-#         output = rule_predict(rule, example)
-#         if output:
-#             if output.get_post_condition() == example.get_classification():
-#                 num_success = num_success + 1
-#     accuracy = (num_success / len(examples)) * 100
-#     return accuracy
-
-# def shuffle_set_of_rules(rules):
-#     random.shuffle(rules)
