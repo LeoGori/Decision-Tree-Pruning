@@ -3,7 +3,7 @@
 Nella seguente repository vengono implementati gli algoritmi di apprendimento di alberi di decisione utilizzando l'entropia come misura di impurità (descritto nel libro "Artificial Intelligence: A Modern Approach", P.Norvig, S.Russell, §18.3) e di una strategia di pruning su un insieme di regole estratte dalla struttura dell'albero basata sull'errore sul validation set (descritto nel libro "Machine Learning", T. Mitchell, §3.7.1.2).
 
 # Come usare il codice
-Per poter eseguire il test per il confronto dell'accuratezza prima e dopo l'applicazione della strategia di pruning è necessario scaricare il dataset [Nursery](https://archive.ics.uci.edu/ml/datasets/Nursery) e inserire il file 'nursery.data' all'interno della directory nominata 'Data'.
+Per poter eseguire il test per il confronto dell'accuratezza prima e dopo l'applicazione della strategia di pruning è necessario scaricare il dataset [Nursery](https://archive.ics.uci.edu/ml/datasets/Nursery) e inserire il file 'nursery.data' all'interno della directory nominata 'Data'. Dopo di che per eseguire i test descritti nella relazione è sufficiente eseguire il file **Test.py**.
 
 # Descrizione del codice
 I file che compongono il progetto sono:
