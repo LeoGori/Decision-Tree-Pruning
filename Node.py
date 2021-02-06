@@ -9,12 +9,6 @@ class Node:
         self._examples = None
         #self._level = None
 
-    # def set_level(self, lv):
-    #     self._level = lv
-    #
-    # def get_level(self):
-    #     return self._level
-
     def add_child(self, label, node):
         self._children[label] = node
 
@@ -36,12 +30,6 @@ class Node:
     def set_father(self, node):
         self._father = node
 
-    # def set_examples(self, data):
-    #     self._examples = data
-    #
-    # def get_examples(self):
-    #     return self._examples
-
     def print(self):
         print(self._attribute)
 
@@ -49,3 +37,16 @@ class Node:
         if isinstance(other, Node):
             return self._attribute == other.get_attribute()
         return False
+
+
+    # def set_examples(self, data):
+    #     self._examples = data
+    #
+    # def get_examples(self):
+    #     return self._examples
+
+    # def set_level(self, lv):
+    #     self._level = lv
+    #
+    # def get_level(self):
+    #     return self._level

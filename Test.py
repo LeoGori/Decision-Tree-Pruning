@@ -6,6 +6,29 @@ from SetOfRules import *
 from Decision_Tree_Learning import *
 
 
+def import_data():
+    balance_data = pd.read_csv(
+        'Data/nursery.data',
+        sep=',', header=None)
+
+    return balance_data
+
+
+def split_dataset(balance_data):
+    # Separating the target variable
+    X = balance_data.values[:, 0:8].tolist()
+    Y = balance_data.values[:, 8].tolist()
+
+    # Splitting the dataset into train and test
+    X_train, X_test_and_validation, y_train, y_test_and_validation = train_test_split(
+        X, Y, test_size=0.4)
+
+    X_validation, X_test, y_validation, y_test = train_test_split(
+        X_test_and_validation, y_test_and_validation, test_size=0.5)
+
+    return X, Y, X_train, X_validation, X_test, y_train, y_validation, y_test
+
+
 def get_attributes():
     attributes = list()
 
@@ -43,20 +66,6 @@ def get_classification():
         classification.set_value(value)
 
     return classification
-
-
-# def get_num_istances_per_classification(classification):
-#     classifications = dict()
-#
-#     for c in classification.get_values():
-#         classifications[c] = 0
-#
-#     print(classifications)
-#
-#     for c in Y:
-#         classifications[c] += 1
-#
-#     print(classifications)
 
 
 class Test:
@@ -156,6 +165,19 @@ class Test:
         print(latextable.draw_latex(self._table,
                                     caption="Confronto di accuratezza sul test set prima e dopo l'esecuzione "
                                             "della strategia di pruning"))
+
+# def get_num_istances_per_classification(classification):
+#     classifications = dict()
+#
+#     for c in classification.get_values():
+#         classifications[c] = 0
+#
+#     print(classifications)
+#
+#     for c in Y:
+#         classifications[c] += 1
+#
+#     print(classifications)
 
 
 def main():

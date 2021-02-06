@@ -45,29 +45,6 @@ class Tree:
     def get_node(self, node, attr_value):
         return node.get_child(attr_value)
 
-    def prune(self, node, classification_node):
-        if node != self.__root:
-            father = node.get_father()
-            labels = list(father.get_children().keys())
-            nodes = list(father.get_children().values())
-            father.add_child(labels[nodes.index(node)], classification_node)
-            node.set_father(None)
-
-    def update_tree(self, attributes):
-        self.__nodes.clear()
-        node = self.__root
-        self.__nodes.append(node)
-        self.__update_tree(node, attributes)
-
-    def __update_tree(self, node, attributes):
-        for child in node.get_children().values():
-            if child.get_attribute() in attributes:
-                self.__nodes.append(child)
-                self.__update_tree(child, attributes)
-
-    def get_height(self):
-        return max(self.__nodes)
-
     def get_set_of_rules(self):
         node = self.__root
         rules = SetOfRules()
@@ -85,3 +62,26 @@ class Tree:
             rule.set_post_condition(current_node.get_attribute().get_name())
             rule_copy = copy.deepcopy(rule)
             rules.add_rule(rule_copy)
+
+    # def prune(self, node, classification_node):
+    #     if node != self.__root:
+    #         father = node.get_father()
+    #         labels = list(father.get_children().keys())
+    #         nodes = list(father.get_children().values())
+    #         father.add_child(labels[nodes.index(node)], classification_node)
+    #         node.set_father(None)
+
+    # def update_tree(self, attributes):
+    #     self.__nodes.clear()
+    #     node = self.__root
+    #     self.__nodes.append(node)
+    #     self.__update_tree(node, attributes)
+
+    # def __update_tree(self, node, attributes):
+    #     for child in node.get_children().values():
+    #         if child.get_attribute() in attributes:
+    #             self.__nodes.append(child)
+    #             self.__update_tree(child, attributes)
+
+    # def get_height(self):
+    #     return max(self.__nodes)

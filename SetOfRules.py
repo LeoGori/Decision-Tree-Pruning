@@ -38,26 +38,33 @@ class SetOfRules:
 
     def rule_pruning(self, examples):
         for rule in list(self.rules):
-            while True:
+            still_editable = True
+            # continuo la ricerca  di letterali da potare all'interno della stessa
+            # regola fin quando non esiste un letterale che ne migliori l'accuratezza
+            while still_editable:
                 # print('regola ' + str(rule.get_preconditions()) + ', ' + rule.get_post_condition())
                 original_accuracy = test_rule_accuracy(rule, examples)
                 accuracy_gain = 0
                 best_precondition_to_prune = None
                 preconditions = list(rule.get_preconditions().items())
+                # per ogni coppia (attributo, valore)
                 for attribute_name, value in preconditions:
+                    # rimuovo il letterale, calcolo la nuova accuratezza e lo riaggiungo alla regola
                     rule.remove_precondition(attribute_name)
                     pruned_accuracy = test_rule_accuracy(rule, examples)
                     rule.add_precondition(attribute_name, value)
                     # print(str(original_accuracy), str(pruned_accuracy) + " per precondition " + attribute_name, value)
+                    # aggiorno il maggior guadagno di accuratezza e registro il letterale responsabile
                     if accuracy_gain < pruned_accuracy - original_accuracy:
                         best_precondition_to_prune = attribute_name
                         accuracy_gain = pruned_accuracy - original_accuracy
                 if best_precondition_to_prune is not None:
                     rule.remove_precondition(best_precondition_to_prune)
+                    # se la regola rimane senza letterali, viene scartata dal Rule Set
                     if not rule.get_preconditions():
                         self.rules.remove(rule)
                 else:
-                    break
+                    still_editable = False
         self.order_set(examples)
 
     def test_accuracy(self, examples):

@@ -6,6 +6,7 @@ from Classification import Classification
 import math
 
 
+# algoritmo descritto in R&N 2009 §18.3
 def decision_tree_learning(examples, attributes, parent_examples):
     if not examples:
         return plurality_value(parent_examples)
@@ -32,7 +33,6 @@ def decision_tree_learning(examples, attributes, parent_examples):
 
 
 def plurality_value(examples):
-
     classification = get_max_classification_occurrences(examples)
     t = Tree()
     a = Attribute(classification)
@@ -52,7 +52,6 @@ def get_max_classification_occurrences(examples):
 
     v = list(classifications.values())
 
-    # taking list of car keys in v
     k = list(classifications.keys())
     return k[v.index(max(v))]
 
@@ -110,26 +109,3 @@ def get_entropy(examples):
             if probability != 0:
                 entropy = entropy + (probability * math.log2(probability))
     return -entropy
-
-
-def import_data():
-    balance_data = pd.read_csv(
-        'Data/nursery.data',
-        sep=',', header=None)
-
-    return balance_data
-
-
-def split_dataset(balance_data):
-    # Separating the target variable
-    X = balance_data.values[:, 0:8].tolist()
-    Y = balance_data.values[:, 8].tolist()
-
-    # Splitting the dataset into train and test
-    X_train, X_test_and_validation, y_train, y_test_and_validation = train_test_split(
-        X, Y, test_size=0.4)
-
-    X_validation, X_test, y_validation, y_test = train_test_split(
-        X_test_and_validation, y_test_and_validation, test_size=0.5)
-
-    return X, Y, X_train, X_validation, X_test, y_train, y_validation, y_test
