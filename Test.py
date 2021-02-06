@@ -86,7 +86,7 @@ class Test:
 
         X, Y, x_train, x_validation, x_test, y_train, y_validation, y_test = split_dataset(data)
 
-        print(str(len(X)) + ', ' + str(len(x_train)) + ', ' + str(len(x_test)) + ', ' + str(len(x_validation)))
+        #print(str(len(X)) + ', ' + str(len(x_train)) + ', ' + str(len(x_test)) + ', ' + str(len(x_validation)))
 
         # definisce un insieme di classificazioni prelevandole dal dataset
         classification = get_classification()
