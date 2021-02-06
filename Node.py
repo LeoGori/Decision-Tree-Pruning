@@ -33,6 +33,16 @@ class Node:
     def print(self):
         print(self._attribute)
 
+    def __str__(self):
+        string = "nodo " + str(self._attribute.get_name())
+        if self._father:
+            string += " con padre " + str(self._father.get_attribute().get_name()) + ","
+        string += " con figli:"
+        for label, node in self._children.items():
+            string += "\n(" + label + ", " + node.get_attribute().get_name() + ")"
+        
+        return string
+
     def __eq__(self, other):
         if isinstance(other, Node):
             return self._attribute == other.get_attribute()

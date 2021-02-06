@@ -34,11 +34,7 @@ class Tree:
     def _x_order(self, v):
         if v.get_children():
             attr = v.get_attribute()
-            print(attr.get_name())
-            if v.get_father() is not None:
-                print(str(v.get_father().get_attribute().get_name()))
-            for value in attr.get_set_of_values():
-                print("label: " + value + ", node: " + v.get_child(value).get_attribute().get_name())
+            print(v)
             for value in attr.get_set_of_values():
                 self._x_order(v.get_child(value))
 

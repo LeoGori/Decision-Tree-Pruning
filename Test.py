@@ -105,6 +105,8 @@ class Test:
         # esegue l'apprendimento dell'albero di decisione
         tree = decision_tree_learning(training_examples, clone_attributes, training_examples)
         print('la radice è ' + str(tree.get_root().get_attribute().get_name()))
+
+        # stampa l'albero
         tree.x_order()
 
         # definisce il set di regole estratto dalla struttura dell'albero
@@ -122,6 +124,7 @@ class Test:
         self.accuracy_pre_pruning.append(accuracy)
         self.rule_set_size_pre_pruning.append(set_of_rules.get_size())
 
+        print("Il set di regole derivato dalla struttura dell'albero è: ")
         for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
 
@@ -135,6 +138,7 @@ class Test:
         self.accuracy_post_pruning.append(accuracy)
         self.rule_set_size_post_pruning.append(set_of_rules.get_size())
 
+        print("Il set di regole dopo la strategia di pruning è: ")
         for rule in set_of_rules.get_rules():
             print(str(rule.get_preconditions()) + " , " + rule.get_post_condition())
         print('accuracy on test set after pruning is: ' + str(accuracy) + ' %')
